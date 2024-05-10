@@ -1,4 +1,4 @@
-import SidebarItem from "@repo/ui/src/SidebarItem";
+import SidebarItem from "@repo/ui/src/components/SidebarItem";
 
 export default function Layout({
   children,
@@ -7,7 +7,7 @@ export default function Layout({
 }): JSX.Element {
   return (
     <div className="flex">
-      <div className="hidden md:block border-r border-slate-500 min-h-screen w-72 pt-28 pl-6">
+      <div className="hidden md:block border-r border-dashed min-h-screen w-72 pt-28 pl-6">
         <SidebarItem href={"/dashboard"} icon={<HomeIcon />} title={"Home"} />
         <SidebarItem
           href={"/transfer"}
@@ -18,6 +18,11 @@ export default function Layout({
           href={"/transaction"}
           icon={<TransactionsIcon />}
           title={"Transaction"}
+        />
+        <SidebarItem
+          href={"/p2p"}
+          icon={<P2PTransferIcon />}
+          title={"P2P Transfer"}
         />
       </div>
 
@@ -77,6 +82,25 @@ function TransactionsIcon() {
         strokeLinecap="round"
         strokeLinejoin="round"
         d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+      />
+    </svg>
+  );
+}
+
+function P2PTransferIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      className="w-6 h-6"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"
       />
     </svg>
   );

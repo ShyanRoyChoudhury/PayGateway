@@ -11,9 +11,9 @@ interface AppbarProps {
 
 export const Appbar = ({ user, onSignin, onSignout }: AppbarProps) => {
   return (
-    <div className="flex justify-between border-b border-slate-500 px-4">
-      <div className="text-lg flex flex-col justify-center text-white">
-        PayTM
+    <div className="flex justify-between border-b border-dashed px-4">
+      <div className="text-lg flex flex-col justify-center font-semibold text-black">
+        PayGateway
       </div>
       <div className="flex flex-col justify-center pt-2">
         <Button onClick={user ? onSignout : onSignin}>

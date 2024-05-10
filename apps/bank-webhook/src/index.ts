@@ -1,21 +1,27 @@
-import express from 'express';
-import db from '@repo/db/client'
+import express, { Request, Response } from 'express';
+import prisma from '@repo/db';
 const app = express();
+app.use(express.json())
 
-app.post('/hdfcwebhook', async (req, res)=>{
+app.post('/hdfcwebhook', async (req: Request, res: Response)=>{
+    if(!req.body.token || !req.body.amount || !req.body.userId){
+        res.status(400).json({
+            error: 'Bad Request'
+        })
+        return;
+    }
     const paymentInfo:{
         token: string,
         userId: string,
         amount: string
     } = {
         token:req.body.token,
-        userId:req.body.user_identifier,
+        userId:req.body.userId,
         amount:req.body.amount 
     }
-    
     try{
-        await db.$transaction([
-            db.balance.update({
+        await prisma.$transaction([
+            prisma.balance.update({
                 where: {
                     userId: Number(paymentInfo.userId)
                 },
@@ -26,7 +32,7 @@ app.post('/hdfcwebhook', async (req, res)=>{
                 }
             }),
 
-            db.onRampTransaction.update({
+            prisma.onRampTransaction.update({
                 where:{
                     token: paymentInfo.token
                 },
@@ -51,4 +57,6 @@ app.post('/hdfcwebhook', async (req, res)=>{
     }
 })
 
-app.listen(3003);
+app.listen(3003, ()=>{
+    console.log('server running on port 3003')
+});

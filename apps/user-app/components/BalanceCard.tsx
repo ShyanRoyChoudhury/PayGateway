@@ -1,5 +1,5 @@
 "use Client";
-import Card from "@repo/ui/src/card";
+import Card from "@repo/ui/src/components/card";
 import React from "react";
 function BalanceCard({
   amount,
@@ -12,7 +12,7 @@ function BalanceCard({
 }) {
   return (
     <div>
-      <Card title={"Balance"} className={`${className} bg-[#1F2937]`}>
+      <Card title={"Balance"} className={`${className} bg-white`}>
         <div className="flex justify-between">
           <div>Unlocked Balance</div>
           <div>{amount / 100} INR</div>

@@ -6,7 +6,7 @@ import { getServerSession } from "next-auth";
 import prisma from "@repo/db";
 import { authOptions } from "../../lib/auth";
 
-async function getTransactions() {
+async function getOnRampTransactions() {
   const session = await getServerSession(authOptions);
   const transactions = await prisma.onRampTransaction.findMany({
     where: {
@@ -18,26 +18,24 @@ async function getTransactions() {
     amount: t.amount,
     status: t.status,
     provider: t.provider,
+    id: t.id,
   }));
 }
 async function getBalance() {
   const session = await getServerSession(authOptions);
-  console.log("userid:", session?.user?.id);
   const balance = await prisma.balance.findFirst({
     where: {
       userId: Number(session?.user?.id),
     },
   });
-  console.log("balance:", balance);
   return {
     amount: balance?.amount || 0,
     locked: balance?.locked || 0,
   };
 }
 async function Transfer() {
-  const transactions = await getTransactions();
+  const transactions = await getOnRampTransactions();
   const balance = await getBalance();
-  console.log("balance:", balance);
   return (
     <div className="p-6 w-full">
       <div className="text-[#6a51a6] text-3xl font-bold">Transfer</div>

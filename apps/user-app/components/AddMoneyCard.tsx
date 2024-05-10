@@ -1,13 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import Card from "@repo/ui/src/card";
-import Select from "@repo/ui/src/Select";
+import Card from "@repo/ui/src/components/card";
+import Select from "@repo/ui/src/components/Select";
 import { useRouter } from "next/navigation";
-import prisma from "@repo/db";
-import { useSession } from "next-auth/react";
+import { Button } from "@repo/ui/src/components/button";
+import { createOnRampTransaction } from "../app/lib/createOnRampTransaction";
 
 function AddMoneyCard() {
-  const session = useSession();
   const supportedBanks = [
     {
       name: "HDFC Bank",
@@ -18,43 +17,46 @@ function AddMoneyCard() {
       redirectUrl: "https://www.axisbank.com/",
     },
   ];
-  const [amount, setAmount] = useState<string | null>(null);
+  const [amount, setAmount] = useState(0);
   const [redirectUrl, setRedirectURL] = useState(
-    supportedBanks[0]?.redirectUrl
+    supportedBanks[0]?.redirectUrl || ""
   );
+  const [provider, setProvider] = useState(supportedBanks[0]?.name || "");
   const router = useRouter();
   return (
     <div className="md:w-1/2">
-      <Card title={"Add Money"} className="bg-[#1F2937]">
+      <Card title={"Add Money"} className="bg-white">
         <form className="">
           <div>
             <label className="">Amount</label>
             <input
               placeholder="Amount"
               name="Amount"
-              className="outline-none w-full bg-white "
-              onChange={(e) => setAmount(e.target.value)}
+              className=" w-full text-black focus:ring-blue-400 p-1.5 bg-gray-300 rounded-md"
+              type="number"
+              onChange={(e) => setAmount(Number(e.target.value))}
             />
           </div>
-          <div className="">
-            <label>Bank</label>
-            <input
-              placeholder="test input"
-              className="outline-none w-full bg-white"
+          <div>
+            <label>Select Bank</label>
+            <Select
+              onSelect={(value: string) => {
+                setRedirectURL(
+                  supportedBanks.find((x) => x.name === value)?.redirectUrl ||
+                    ""
+                );
+                setProvider(
+                  supportedBanks.find((x) => x.name === value)?.name || ""
+                );
+              }}
+              options={supportedBanks.map((bank) => ({
+                key: bank.name,
+                value: bank.name,
+              }))}
             />
           </div>
-          <Select
-            onSelect={(value) => {
-              setRedirectURL(
-                supportedBanks.find((x) => x.name === value)?.redirectUrl || ""
-              );
-            }}
-            options={supportedBanks.map((bank) => ({
-              key: bank.name,
-              value: bank.name,
-            }))}
-          />
-          <div className="flex justify-center pt-4">
+
+          {/* <div className="flex justify-center pt-4">
             <button
               onClick={() => {
                 router.push(redirectUrl || "");
@@ -62,25 +64,19 @@ function AddMoneyCard() {
             >
               Select Bank
             </button>
-          </div>
-          <div className="flex justify-center pt-10">
-            <button
-              className="border p-1 px-2 rounded-md"
+          </div> */}
+          <div className="flex justify-center pt-6">
+            <Button
+              className="  rounded-md bg-gray-900 hover:bg-gray-700 focus:ring-0"
               onClick={async () => {
-                await prisma.onRampTransaction.create({
-                  data: {
-                    startTime: new Date(),
-                    status: "Processing",
-                    amount: Number(amount),
-                    token: "13333",
-                    userId: 18,
-                    provider: "HDFC Bank",
-                  },
-                });
+                if (amount > 0) {
+                  const data = await createOnRampTransaction(provider, amount);
+                  console.log(data.message);
+                }
               }}
             >
               Add Money
-            </button>
+            </Button>
           </div>
         </form>
       </Card>
