@@ -18,10 +18,10 @@ jobs:
           node-version: "18"
 
       - name: Install Dependencies
-        uses: npm install --legacy-peer-deps
+        run: npm install --legacy-peer-deps
 
       - name: Run linting check
-        uses: npm run lint
+        run: npm run lint
 
       - name: Run format check
-        uses: npm run format
+        run: npm run format
