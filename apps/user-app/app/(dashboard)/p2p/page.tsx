@@ -31,7 +31,6 @@ export default async function p2p() {
         timestamp: "desc",
       },
     });
-    console.log(transactions);
     return transactions.map((t) => ({
       time: t.timestamp,
       amount: t.amount,

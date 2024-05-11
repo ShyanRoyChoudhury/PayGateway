@@ -4,7 +4,7 @@ function Select({
   onSelect,
   options,
 }: {
-  onSelect: (value: string) => void;
+  onSelect: (value: string) => void; // eslint-disable-line no-unused-vars
   options: {
     key: string;
     value: string;

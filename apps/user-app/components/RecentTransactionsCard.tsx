@@ -19,7 +19,6 @@ function RecentTransactionsCard({
   session?: any;
   className?: string;
 }): JSX.Element {
-  console.log(session);
   if (!transactions) {
     return (
       <div>

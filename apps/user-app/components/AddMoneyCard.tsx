@@ -19,7 +19,7 @@ function AddMoneyCard() {
   ];
   const [amount, setAmount] = useState(0);
   const [redirectUrl, setRedirectURL] = useState(
-    supportedBanks[0]?.redirectUrl || ""
+    supportedBanks[0]?.redirectUrl || "",
   );
   const [provider, setProvider] = useState(supportedBanks[0]?.name || "");
   const router = useRouter();
@@ -43,10 +43,10 @@ function AddMoneyCard() {
               onSelect={(value: string) => {
                 setRedirectURL(
                   supportedBanks.find((x) => x.name === value)?.redirectUrl ||
-                    ""
+                    "",
                 );
                 setProvider(
-                  supportedBanks.find((x) => x.name === value)?.name || ""
+                  supportedBanks.find((x) => x.name === value)?.name || "",
                 );
               }}
               options={supportedBanks.map((bank) => ({
@@ -73,6 +73,7 @@ function AddMoneyCard() {
                   const data = await createOnRampTransaction(provider, amount);
                   console.log(data.message);
                 }
+                router.push(redirectUrl || "");
               }}
             >
               Add Money
