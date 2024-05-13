@@ -12,8 +12,6 @@ RUN npm install
 
 RUN cd packages/db && npx prisma generate && cd ../..
 
-ARG DATABASE_URL
-
 RUN npm run build
 
 CMD [ "npm", "run", "start" ] 
