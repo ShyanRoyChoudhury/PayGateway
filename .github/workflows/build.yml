@@ -25,5 +25,5 @@ jobs:
 
       - name: Run Build script
         run: npm run build
-        with:
+        env:
           DATABASE_URL: ${{secrets.DATABASE_URL}}
