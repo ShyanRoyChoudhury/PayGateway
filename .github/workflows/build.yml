@@ -2,7 +2,7 @@ name: Build on merge
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   Continuous-Integration:
