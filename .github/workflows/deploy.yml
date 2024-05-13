@@ -27,4 +27,4 @@ jobs:
           build-args: DATABASE_URL=${{secrets.DATABASE_URL}}
 
       - name: Verify pushed Image
-        run: docker pull shyanroychodhury/paygateway
+        run: docker pull shyanroychoudhury/paygateway
