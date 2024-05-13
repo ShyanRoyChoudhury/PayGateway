@@ -24,8 +24,8 @@ jobs:
           file: ./docker/Dockerfile.userApp
           push: true
           tags: shyanroychoudhury/paygateway:latest
-          secret-envs: |
-            DATABASE_URL=${{secrets.DATABASE_URL}}
+        env:
+          MY_ENV_VAR: ${{ secrets.MY_ENV_VAR }}
 
       - name: Verify pushed Image
         run: docker pull shyanroychodhury/paygateway
