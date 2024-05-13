@@ -1,0 +1,27 @@
+name: Linting and formatting on PR
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  Continuous-Integration:
+    name: Performs Linting, formatting on the code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: USE Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install Dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Run linting check
+        run: npm run lint
+
+      - name: Run format check
+        run: npm run format
