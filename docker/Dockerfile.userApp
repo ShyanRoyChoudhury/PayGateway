@@ -12,6 +12,9 @@ RUN npm install
 
 RUN cd packages/db && npx prisma generate && cd ../..
 
+ARG DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
+
 RUN npm run build
 
 CMD [ "npm", "run", "start" ] 
