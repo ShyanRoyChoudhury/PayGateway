@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local", "$JWT_SECRET", "$GOOGLE_CLIENT_ID", "$GOOGLE_CLIENT_SECRET", "$NEXTAUTH_SECRET", "$GOOGLE_CLIENT_ID", "$GOOGLE_CLIENT_SECRET"],
+  "globalDependencies": ["**/.env.*local", "$JWT_SECRET", "$GOOGLE_CLIENT_ID", "$GOOGLE_CLIENT_SECRET", "$NEXTAUTH_SECRET", "$GOOGLE_CLIENT_ID", "$GOOGLE_CLIENT_SECRET", "DATABASE_URL"],
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
@@ -11,7 +11,8 @@
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "env": ["DATABASE_URL"]
     }
   }
 }
